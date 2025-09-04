@@ -1,11 +1,11 @@
-// script.js - Controle de slides com transições fluidas
+// script.js - Controle de slides com animações avançadas
 document.addEventListener('DOMContentLoaded', () => {
     const slidesContainer = document.getElementById('slides');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dotsWrap = document.getElementById('dots');
     const progressBar = document.getElementById('progressBar');
-    const TRANSITION_DURATION = 800; // Duração da transição em ms
+    const TRANSITION_DURATION = 800;
 
     let currentSlideIndex = 0;
     let isAnimating = false;
@@ -17,6 +17,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // Selecionar todos os slides
     const slides = Array.from(document.querySelectorAll('.slide'));
     const totalSlides = slides.length;
+
+    // Criar elementos de fundo animados para cada slide
+    function createSlideBackgrounds() {
+        slides.forEach((slide, index) => {
+            if (index === 0) return; // Pular o slide de título
+            
+            const backgroundElements = document.createElement('div');
+            backgroundElements.className = 'slide-background-elements';
+            
+            // Adicionar diferentes elementos de fundo
+            for (let i = 0; i < 8; i++) {
+                const element = document.createElement('div');
+                element.className = `bg-element bg-element-${i % 4}`;
+                
+                // Posicionamento aleatório
+                const top = Math.random() * 80 + 10;
+                const left = Math.random() * 80 + 10;
+                const size = Math.random() * 30 + 10;
+                
+                element.style.top = `${top}%`;
+                element.style.left = `${left}%`;
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                
+                // Animação personalizada
+                const duration = Math.random() * 15 + 10;
+                const delay = Math.random() * 5;
+                element.style.animationDuration = `${duration}s`;
+                element.style.animationDelay = `${delay}s`;
+                
+                backgroundElements.appendChild(element);
+            }
+            
+            slide.appendChild(backgroundElements);
+        });
+    }
 
     // Criar dots de navegação
     slides.forEach((slide, index) => {
@@ -48,13 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Animar conteúdo do slide quando ele se torna ativo
     function animateSlideContent(slide) {
-        // Reiniciar animações
+        // Elementos para animar
         const textElements = slide.querySelectorAll('.text > *');
         const imageElements = slide.querySelectorAll('.slide-image-container');
         const cards = slide.querySelectorAll('.info-card, .importance-card');
         const notes = slide.querySelectorAll('.note-box');
         const keyPoints = slide.querySelectorAll('.key-point');
         const listItems = slide.querySelectorAll('.feature-list li');
+        const backgroundElements = slide.querySelectorAll('.bg-element');
 
         // Reiniciar opacidade
         textElements.forEach(el => {
@@ -86,15 +123,28 @@ document.addEventListener('DOMContentLoaded', () => {
             el.style.opacity = '0';
             el.style.transform = 'translateX(-10px)';
         });
+        
+        backgroundElements.forEach(el => {
+            el.style.opacity = '0';
+        });
 
         // Aplicar animações com delays
         setTimeout(() => {
+            // Animar elementos de fundo primeiro
+            backgroundElements.forEach((el, i) => {
+                setTimeout(() => {
+                    el.style.transition = 'opacity 1.2s ease';
+                    el.style.opacity = '0.15';
+                }, i * 100);
+            });
+
+            // Animar elementos de conteúdo
             textElements.forEach((el, i) => {
                 setTimeout(() => {
                     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                     el.style.opacity = '1';
                     el.style.transform = 'translateY(0)';
-                }, i * 100);
+                }, 300 + i * 100);
             });
 
             imageElements.forEach((el, i) => {
@@ -102,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                     el.style.opacity = '1';
                     el.style.transform = 'translateY(0)';
-                }, 300 + i * 100);
+                }, 500 + i * 100);
             });
 
             cards.forEach((el, i) => {
@@ -110,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     el.style.opacity = '1';
                     el.style.transform = 'translateY(0)';
-                }, 400 + i * 100);
+                }, 600 + i * 100);
             });
 
             notes.forEach((el, i) => {
@@ -118,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     el.style.opacity = '1';
                     el.style.transform = 'translateX(0)';
-                }, 600 + i * 100);
+                }, 800 + i * 100);
             });
 
             keyPoints.forEach((el, i) => {
@@ -126,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
                     el.style.opacity = '1';
                     el.style.transform = 'translateX(0)';
-                }, 500 + i * 100);
+                }, 700 + i * 100);
             });
 
             listItems.forEach((el, i) => {
@@ -134,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
                     el.style.opacity = '1';
                     el.style.transform = 'translateX(0)';
-                }, 300 + i * 100);
+                }, 400 + i * 100);
             });
         }, 100);
     }
@@ -172,10 +222,17 @@ document.addEventListener('DOMContentLoaded', () => {
         nextSlide.style.transition = `transform ${TRANSITION_DURATION}ms ease, opacity ${TRANSITION_DURATION}ms ease`;
         
         // Mover slides
-        currentSlide.style.transform = 'translateX(-100%)';
-        currentSlide.style.opacity = '0';
+        if (nextIndex > currentSlideIndex) {
+            // Próximo slide
+            currentSlide.style.transform = 'translateX(-100%)';
+            nextSlide.style.transform = 'translateX(0)';
+        } else {
+            // Slide anterior
+            currentSlide.style.transform = 'translateX(100%)';
+            nextSlide.style.transform = 'translateX(0)';
+        }
         
-        nextSlide.style.transform = 'translateX(0)';
+        currentSlide.style.opacity = '0';
         nextSlide.style.opacity = '1';
         
         // Atualizar classes ativas
@@ -268,6 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     // Inicializar
+    createSlideBackgrounds();
     initializeSlides();
     updateProgressBar(currentSlideIndex);
     
@@ -281,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isAnimating && !touchMoved) {
             goToNextSlide();
         }
-    }, 10000); // Mudar slide a cada 10 segundos
+    }, 10000);
 
     // Pausar auto-rotação quando o usuário interagir
     function stopAutoRotation() {
@@ -291,4 +349,83 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', stopAutoRotation);
     document.addEventListener('click', stopAutoRotation);
     document.addEventListener('touchstart', stopAutoRotation);
+
+    // Adicionar estilos dinâmicos para elementos de fundo
+    const style = document.createElement('style');
+    style.textContent = `
+        .slide-background-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .bg-element {
+            position: absolute;
+            opacity: 0;
+            border-radius: 50%;
+            animation: floatBackgroundElement 15s infinite linear;
+        }
+        
+        .bg-element-0 {
+            background: rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .bg-element-1 {
+            background: rgba(41, 128, 185, 0.2);
+            box-shadow: 0 0 15px rgba(41, 128, 185, 0.3);
+            border-radius: 10% !important;
+        }
+        
+        .bg-element-2 {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70% !important;
+        }
+        
+        .bg-element-3 {
+            background: rgba(44, 62, 80, 0.15);
+            box-shadow: 0 0 10px rgba(44, 62, 80, 0.2);
+            border-radius: 5px !important;
+        }
+        
+        @keyframes floatBackgroundElement {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translate(20px, 30px) rotate(90deg) scale(1.1);
+            }
+            50% {
+                transform: translate(0, 60px) rotate(180deg) scale(1);
+            }
+            75% {
+                transform: translate(-20px, 30px) rotate(270deg) scale(0.9);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg) scale(1);
+            }
+        }
+        
+        .slide--title .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+    `;
+    document.head.appendChild(style);
 });
