@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDots(nextIndex);
         updateProgressBar(nextIndex);
         
-        // Animar conteúdo do novo slide após a transição
+        // Animar conteúdo del novo slide após a transição
         setTimeout(() => {
             animateSlideContent(nextSlide);
             currentSlideIndex = nextIndex;
@@ -371,13 +371,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         .bg-element-0 {
-            background: rgba(52, 152, 219, 0.2);
-            box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
+            background: rgba(66, 153, 225, 0.2);
+            box-shadow: 0 0 15px rgba(66, 153, 225, 0.3);
         }
         
         .bg-element-1 {
-            background: rgba(41, 128, 185, 0.2);
-            box-shadow: 0 0 15px rgba(41, 128, 185, 0.3);
+            background: rgba(49, 130, 206, 0.2);
+            box-shadow: 0 0 15px rgba(49, 130, 206, 0.3);
             border-radius: 10% !important;
         }
         
@@ -388,8 +388,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         .bg-element-3 {
-            background: rgba(44, 62, 80, 0.15);
-            box-shadow: 0 0 10px rgba(44, 62, 80, 0.2);
+            background: rgba(26, 58, 95, 0.15);
+            box-shadow: 0 0 10px rgba(26, 58, 95, 0.2);
             border-radius: 5px !important;
         }
         
