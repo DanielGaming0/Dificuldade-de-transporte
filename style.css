@@ -374,7 +374,7 @@ html, body {
 }
 
 .slide--title h1 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-size: 56px;
   font-weight: 700;
   color: var(--white);
@@ -392,6 +392,7 @@ html, body {
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .decorative-line {
@@ -413,6 +414,7 @@ html, body {
   letter-spacing: 1px;
   backdrop-filter: blur(10px);
   margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .scroll-indicator {
@@ -426,6 +428,7 @@ html, body {
   align-items: center;
   gap: 10px;
   animation: bounce 2s infinite;
+  font-family: 'Open Sans', sans-serif;
 }
 
 @keyframes bounce {
@@ -528,7 +531,47 @@ html, body {
   max-width: 700px;
 }
 
-/* Cabeçalhos */
+/* Cabeçalhos - Tipografia personalizada por slide */
+.slide:nth-child(2) h2 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.slide:nth-child(3) h2 {
+  font-family: 'Roboto Slab', serif;
+}
+
+.slide:nth-child(4) h2 {
+  font-family: 'Raleway', sans-serif;
+}
+
+.slide:nth-child(5) h2 {
+  font-family: 'Poppins', sans-serif;
+}
+
+.slide:nth-child(6) h2 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.slide:nth-child(7) h2 {
+  font-family: 'Roboto Slab', serif;
+}
+
+.slide:nth-child(8) h2 {
+  font-family: 'Raleway', sans-serif;
+}
+
+.slide:nth-child(9) h2 {
+  font-family: 'Poppins', sans-serif;
+}
+
+.slide:nth-child(10) h2 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.slide--conclusion h2 {
+  font-family: 'Raleway', sans-serif;
+}
+
 h2 {
   font-size: 36px;
   color: var(--primary);
@@ -538,7 +581,6 @@ h2 {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Montserrat', sans-serif;
 }
 
 h2::after {
